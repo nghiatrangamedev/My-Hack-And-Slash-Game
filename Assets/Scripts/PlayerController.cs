@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] GameObject _sword;
+    //[SerializeField] GameObject _sword;
+    [SerializeField] GameObject _bestSword;
 
     Rigidbody2D _playerRb;
 
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     bool _isOnGround;
     bool _isFaceRight = true;
     bool _isDashed;
+    bool _isAttacked;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +43,7 @@ public class PlayerController : MonoBehaviour
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !_isAttacked)
         {
             PlayerAttack();
         }
@@ -96,10 +98,35 @@ public class PlayerController : MonoBehaviour
 
     void PlayerAttack()
     {
-        ActiveSword();
-        StartCoroutine(DeactiveSword());
+        _isAttacked = true;
+        StartCoroutine(AttackRate());
+        SpawnSword();
+
+        //ActiveSword();
+        //StartCoroutine(DeactiveSword());
     }
 
+    void SpawnSword()
+    {
+        if (_isFaceRight)
+        {
+            Instantiate(_bestSword, transform.position + Vector3.right, _bestSword.transform.rotation);
+        }
+
+        else
+        {
+            Instantiate(_bestSword, transform.position + Vector3.left, _bestSword.transform.rotation);
+        }
+    }
+
+    IEnumerator AttackRate()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _isAttacked = false;
+
+    }
+
+    /*
     void ActiveSword()
     {
         _sword.SetActive(true);
@@ -107,9 +134,10 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator DeactiveSword()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         _sword.SetActive(false);
     }
+    */
 
     void Dash()
     {

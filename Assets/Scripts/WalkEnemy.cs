@@ -2,26 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class WalkEnemy : Enemy
 {
-    float _heath = 100.0f;
+    Rigidbody2D _enemyRb;
+    float _speed = 10.0f;
     // Start is called before the first frame update
     void Start()
     {
-        
+        _enemyRb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    private void FixedUpdate()
+    {
+        EnemyMovement();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Sword"))
         {
-            GetDamaged();
-            Debug.Log("Heath: " + _heath);
+            Destroy(gameObject);
         }
 
         if (collision.gameObject.CompareTag("Player"))
@@ -30,12 +36,8 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void GetDamaged()
+    void EnemyMovement()
     {
-        _heath -= 10;
-        if (_heath <= 0)
-        {
-            Destroy(gameObject);
-        }
+        _enemyRb.AddForce(Vector2.left * _speed);
     }
 }
