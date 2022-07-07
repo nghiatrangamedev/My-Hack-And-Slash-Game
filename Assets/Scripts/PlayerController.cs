@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    //[SerializeField] GameObject _sword;
     [SerializeField] GameObject _bestSword;
 
     Rigidbody2D _playerRb;
@@ -14,11 +13,31 @@ public class PlayerController : MonoBehaviour
     float _speed = 20.0f;
     float _jumpForce = 10.0f;
     float _dashForce = 5.0f;
+    float _playerHeath = 100.0f;
 
     bool _isOnGround;
     bool _isFaceRight = true;
     bool _isDashed;
     bool _isAttacked;
+
+    public float PlayerHeath
+    {
+        get { return _playerHeath; }
+        set
+        {
+            if (value > 100 )
+            {
+                value = 100;
+            }
+
+            else if (value < 0)
+            {
+                value = 0;
+            }
+
+            _playerHeath = value;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -126,19 +145,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    /*
-    void ActiveSword()
-    {
-        _sword.SetActive(true);
-    }
-
-    IEnumerator DeactiveSword()
-    {
-        yield return new WaitForSeconds(0.2f);
-        _sword.SetActive(false);
-    }
-    */
-
     void Dash()
     {
         _playerRb.AddForce(Vector2.right * _horizontalInput * _dashForce, ForceMode2D.Impulse);
@@ -150,6 +156,22 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         _isDashed = false;
+    }
+
+    void GetDamaged (Vector3 _enemyPos)
+    {
+        Vector2 _backDirection = transform.position - _enemyPos;
+        float _backForce = 5.0f;
+
+        _playerRb.AddForce(_backDirection * _backForce, ForceMode2D.Impulse);
+        PlayerHeath -= 10;
+
+        Debug.Log("Player heath: " + PlayerHeath);
+        if (PlayerHeath <= 0)
+        {
+            Destroy(gameObject);
+        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -167,6 +189,14 @@ public class PlayerController : MonoBehaviour
         {
             _isOnGround = false;
             Debug.Log("Is on the ground " + _isOnGround);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            GetDamaged(collision.gameObject.transform.position);
         }
     }
 }

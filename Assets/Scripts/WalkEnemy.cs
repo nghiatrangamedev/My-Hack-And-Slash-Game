@@ -27,12 +27,7 @@ public class WalkEnemy : Enemy
     {
         if (collision.gameObject.CompareTag("Sword"))
         {
-            Destroy(gameObject);
-        }
-
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Destroy(collision.gameObject);
+            GetDamaged(20);
         }
     }
 

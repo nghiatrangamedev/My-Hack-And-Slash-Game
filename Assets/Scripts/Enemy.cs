@@ -8,31 +8,30 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Sword"))
         {
-            GetDamaged();
-            Debug.Log("Heath: " + _heath);
+            GetDamaged(10);
+            
         }
 
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Destroy(collision.gameObject);
-        }
     }
 
-    void GetDamaged()
+    protected void GetDamaged(float damage)
     {
-        _heath -= 10;
+        _heath -= damage;
+        Debug.Log("Enemy heath: " + _heath);
+
         if (_heath <= 0)
         {
             Destroy(gameObject);
