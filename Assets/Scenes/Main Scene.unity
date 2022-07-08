@@ -455,6 +455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerScript: {fileID: 1315891902}
   _playerHeathText: {fileID: 946663963}
+  _gameOver: {fileID: 728269987}
 --- !u!4 &611493080
 Transform:
   m_ObjectHideFlags: 0
@@ -484,7 +485,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &728269988
 RectTransform:
   m_ObjectHideFlags: 0

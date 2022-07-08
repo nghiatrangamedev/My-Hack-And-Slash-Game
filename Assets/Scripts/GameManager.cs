@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] PlayerController _playerScript;
     [SerializeField] TextMeshProUGUI _playerHeathText;
+    [SerializeField] GameObject _gameOver;
 
     float _playerHeath;
 
@@ -23,12 +24,26 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         DisplayPlayerHeath();
+        CheckGameOver();
     }
 
     void DisplayPlayerHeath()
     {
         _playerHeath = _playerScript.PlayerHeath;
         _playerHeathText.SetText("Heath: " + _playerHeath);
+    }
+
+    void CheckGameOver ()
+    {
+        if (_playerHeath <= 0)
+        {
+            _gameOver.SetActive(true);
+        }
+
+        else
+        {
+            _gameOver.SetActive(false);
+        }
     }
 
     public void PlayAgain()
