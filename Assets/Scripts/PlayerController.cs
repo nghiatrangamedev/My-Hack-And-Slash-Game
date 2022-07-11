@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] GameObject _bestSword;
+    Animator _playerAnimator;
 
     Rigidbody2D _playerRb;
 
@@ -43,12 +44,14 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _playerRb = GetComponent<Rigidbody2D>();
+        _playerAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         PlayerInput();
+        _playerAnimator.SetFloat("speed", Mathf.Abs(_horizontalInput));
         FlipPlayer();
     }
 
