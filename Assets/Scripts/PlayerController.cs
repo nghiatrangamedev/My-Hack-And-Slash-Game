@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
         get { return _playerHeath; }
         set
         {
-            if (value > 100 )
+            if (value > 100)
             {
                 value = 100;
             }
@@ -51,8 +51,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         PlayerInput();
-        _playerAnimator.SetFloat("speed", Mathf.Abs(_horizontalInput));
         FlipPlayer();
+        PlayerAnimation();
     }
 
     private void FixedUpdate()
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
             {
                 Dash();
             }
-            
+
         }
     }
 
@@ -161,7 +161,7 @@ public class PlayerController : MonoBehaviour
         _isDashed = false;
     }
 
-    void GetDamaged (Vector3 _enemyPos)
+    void GetDamaged(Vector3 _enemyPos)
     {
         Vector2 _backDirection = transform.position - _enemyPos;
         float _backForce = 5.0f;
@@ -173,6 +173,49 @@ public class PlayerController : MonoBehaviour
         if (PlayerHeath <= 0)
         {
             Destroy(gameObject);
+        }
+
+    }
+
+    void PlayerAnimation()
+    {
+        MoveAnimation();
+        JumpToFallAnimation();
+        IdieFallAnimation();
+    }
+
+    void MoveAnimation()
+    {
+        _playerAnimator.SetFloat("speed", Mathf.Abs(_horizontalInput));
+    }
+
+    void JumpToFallAnimation()
+    {
+        if (_isOnGround)
+        {
+            if (_verticalInput > 0)
+            {
+                _playerAnimator.SetBool("isJump", true);
+            }
+
+            else
+            {
+                _playerAnimator.SetBool("isJump", false);
+            }
+        }
+        
+    }
+
+    void IdieFallAnimation()
+    {
+        if (_isOnGround)
+        {
+            _playerAnimator.SetBool("isOnGround", true);
+        }
+
+        else
+        {
+            _playerAnimator.SetBool("isOnGround", false);
         }
         
     }
