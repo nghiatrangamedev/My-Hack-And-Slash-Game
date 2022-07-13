@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     float _verticalInput;
     float _speed = 20.0f;
     float _jumpForce = 10.0f;
-    float _dashForce = 5.0f;
+    float _dashForce = 15.0f;
     float _playerHeath = 100.0f;
 
     bool _isOnGround;
@@ -108,13 +108,13 @@ public class PlayerController : MonoBehaviour
         if (_isFaceRight && _horizontalInput < 0)
         {
             _isFaceRight = false;
-            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+            transform.localRotation = Quaternion.Euler(0, 180, 0);
         }
 
         else if (!_isFaceRight && _horizontalInput > 0)
         {
             _isFaceRight = true;
-            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
     }
 
@@ -150,14 +150,23 @@ public class PlayerController : MonoBehaviour
 
     void Dash()
     {
-        _playerRb.AddForce(Vector2.right * _horizontalInput * _dashForce, ForceMode2D.Impulse);
+        if (_horizontalInput == 0)
+        {
+            _playerRb.AddForce(transform.right * _dashForce, ForceMode2D.Impulse);
+        }
+
+        else
+        {
+            _playerRb.AddForce(transform.right * _dashForce / 2, ForceMode2D.Impulse);
+        }
+        
         _isDashed = true;
         StartCoroutine(DashCD());
     }
 
     IEnumerator DashCD()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.1f);
         _isDashed = false;
     }
 
@@ -182,6 +191,7 @@ public class PlayerController : MonoBehaviour
         MoveAnimation();
         JumpToFallAnimation();
         IdieFallAnimation();
+        DashAnimation();
     }
 
     void MoveAnimation()
@@ -218,6 +228,11 @@ public class PlayerController : MonoBehaviour
             _playerAnimator.SetBool("isOnGround", false);
         }
         
+    }
+
+    void DashAnimation()
+    {
+        _playerAnimator.SetBool("isDash", _isDashed);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
