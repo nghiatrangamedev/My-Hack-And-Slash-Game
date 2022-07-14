@@ -4,21 +4,23 @@ using UnityEngine;
 
 public class BestSword : MonoBehaviour
 {
+    Transform _playerPos;
     // Start is called before the first frame update
     void Start()
     {
-        
+        _playerPos = GameObject.Find("Player").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
+        transform.localPosition = _playerPos.position + _playerPos.right;
         StartCoroutine(AutoDestroy());
     }
 
     IEnumerator AutoDestroy()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
 

@@ -192,6 +192,7 @@ public class PlayerController : MonoBehaviour
         JumpToFallAnimation();
         IdieFallAnimation();
         DashAnimation();
+        AttackAnimation();
     }
 
     void MoveAnimation()
@@ -207,13 +208,12 @@ public class PlayerController : MonoBehaviour
             {
                 _playerAnimator.SetBool("isJump", true);
             }
-
-            else
-            {
-                _playerAnimator.SetBool("isJump", false);
-            }
         }
-        
+
+        else
+        {
+            _playerAnimator.SetBool("isJump", false);
+        }
     }
 
     void IdieFallAnimation()
@@ -233,6 +233,11 @@ public class PlayerController : MonoBehaviour
     void DashAnimation()
     {
         _playerAnimator.SetBool("isDash", _isDashed);
+    }
+
+    void AttackAnimation()
+    {
+        _playerAnimator.SetBool("isAttack", _isAttacked);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
