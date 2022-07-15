@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     bool _isFaceRight = true;
     bool _isDashed;
     bool _isAttacked;
+    bool _isGetHurt;
 
     public float PlayerHeath
     {
@@ -172,10 +173,10 @@ public class PlayerController : MonoBehaviour
 
     void GetDamaged(Vector3 _enemyPos)
     {
-        Vector2 _backDirection = transform.position - _enemyPos;
-        float _backForce = 5.0f;
+        Vector2 _backDirection = new Vector3( (transform.position.x - _enemyPos.x) * 20, transform.position.y);
+        float _backForce = 40.0f;
 
-        _playerRb.AddForce(_backDirection * _backForce, ForceMode2D.Impulse);
+        _playerRb.AddForce(_backDirection , ForceMode2D.Impulse);
         PlayerHeath -= 10;
 
         Debug.Log("Player heath: " + PlayerHeath);
@@ -193,6 +194,7 @@ public class PlayerController : MonoBehaviour
         IdieFallAnimation();
         DashAnimation();
         AttackAnimation();
+        HurtAnimation();
     }
 
     void MoveAnimation()
@@ -240,6 +242,11 @@ public class PlayerController : MonoBehaviour
         _playerAnimator.SetBool("isAttack", _isAttacked);
     }
 
+    void HurtAnimation()
+    {
+        _playerAnimator.SetBool("isHurt", _isGetHurt);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -263,6 +270,15 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             GetDamaged(collision.gameObject.transform.position);
+            _isGetHurt = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            _isGetHurt = false;
         }
     }
 }
