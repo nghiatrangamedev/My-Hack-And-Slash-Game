@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-
+    [SerializeField] GameObject _damageBox;
+    
     Rigidbody2D _enemyRb;
     Animator _enemyAnimator;
 
@@ -57,14 +58,16 @@ public class Enemy : MonoBehaviour
         _enemyAnimator.SetBool("isDead", _isDead);
     }
 
+    /* Attack Animation
     void AttackAnimation()
     {
         _enemyAnimator.SetBool("isAttack", _isAttack);
     }
+    */
 
     IEnumerator WaitDeathAnimationEnd()
     {
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
 
@@ -98,8 +101,14 @@ public class Enemy : MonoBehaviour
         {
             _isAttack = true;
             _enemyAnimator.SetBool("isAttack", true);
+            Invoke("SpawnDamageBox", 0.5f);
             StartCoroutine(AttackRate());
         }
+    }
+
+    void SpawnDamageBox()
+    {
+        Instantiate(_damageBox, transform.position, Quaternion.identity);
     }
 
     IEnumerator AttackRate()
@@ -107,7 +116,7 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(0.8f);
         _enemyAnimator.SetBool("isAttack", false);
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         _isAttack = false;
     }
 }

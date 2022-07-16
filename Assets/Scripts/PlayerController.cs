@@ -174,14 +174,15 @@ public class PlayerController : MonoBehaviour
         _isDashed = false;
     }
 
-    void GetDamaged(Vector3 _enemyPos)
+    void GetDamaged(/*Vector3 _enemyPos*/)
     {
+        /*
         float _backForce = 10.0f;
         Vector2 _backDirection = new Vector3( (transform.position.x - _enemyPos.x) * _backForce, transform.position.y);
 
         _playerRb.AddForce(_backDirection , ForceMode2D.Impulse);
+        */
         PlayerHeath -= 10;
-
         Debug.Log("Player heath: " + PlayerHeath);
 
         if (PlayerHeath <= 0 && !_isDeath)
@@ -262,7 +263,12 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             _isOnGround = true;
-            Debug.Log("Is on the ground " + _isOnGround);
+        }
+
+        if (collision.gameObject.CompareTag("EnemyDamage"))
+        {
+            GetDamaged();
+            _isGetHurt = true;
         }
     }
 
@@ -273,13 +279,18 @@ public class PlayerController : MonoBehaviour
             _isOnGround = false;
             Debug.Log("Is on the ground " + _isOnGround);
         }
+
+        if (collision.gameObject.CompareTag("EnemyDamage"))
+        {
+            _isGetHurt = false;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            GetDamaged(collision.gameObject.transform.position);
+            GetDamaged();
             _isGetHurt = true;
         }
     }
