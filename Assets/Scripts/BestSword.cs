@@ -20,7 +20,7 @@ public class BestSword : MonoBehaviour
 
     IEnumerator AutoDestroy()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.4f);
         Destroy(gameObject);
     }
 

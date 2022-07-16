@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     bool _isDashed;
     bool _isAttacked;
     bool _isGetHurt;
+    bool _isDeath;
 
     public float PlayerHeath
     {
@@ -123,7 +124,9 @@ public class PlayerController : MonoBehaviour
     {
         _isAttacked = true;
         StartCoroutine(AttackRate());
-        SpawnSword();
+
+        Invoke("SpawnSword", 0.3f);
+        //SpawnSword();
 
         //ActiveSword();
         //StartCoroutine(DeactiveSword());
@@ -144,7 +147,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator AttackRate()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.7f);
         _isAttacked = false;
 
     }
@@ -167,24 +170,25 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator DashCD()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
         _isDashed = false;
     }
 
     void GetDamaged(Vector3 _enemyPos)
     {
-        Vector2 _backDirection = new Vector3( (transform.position.x - _enemyPos.x) * 20, transform.position.y);
-        float _backForce = 40.0f;
+        float _backForce = 10.0f;
+        Vector2 _backDirection = new Vector3( (transform.position.x - _enemyPos.x) * _backForce, transform.position.y);
 
         _playerRb.AddForce(_backDirection , ForceMode2D.Impulse);
         PlayerHeath -= 10;
 
         Debug.Log("Player heath: " + PlayerHeath);
-        if (PlayerHeath <= 0)
-        {
-            Destroy(gameObject);
-        }
 
+        if (PlayerHeath <= 0 && !_isDeath)
+        {
+            //_isDeath = true;
+            _playerAnimator.Play("Death", 0);
+        }
     }
 
     void PlayerAnimation()
@@ -195,6 +199,7 @@ public class PlayerController : MonoBehaviour
         DashAnimation();
         AttackAnimation();
         HurtAnimation();
+        DeathAnimation();
     }
 
     void MoveAnimation()
@@ -245,6 +250,11 @@ public class PlayerController : MonoBehaviour
     void HurtAnimation()
     {
         _playerAnimator.SetBool("isHurt", _isGetHurt);
+    }
+
+    void DeathAnimation()
+    {
+        _playerAnimator.SetBool("isDeath", _isDeath);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
