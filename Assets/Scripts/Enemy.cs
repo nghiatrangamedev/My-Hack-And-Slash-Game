@@ -8,10 +8,12 @@ public class Enemy : MonoBehaviour
     Rigidbody2D _enemyRb;
     Animator _enemyAnimator;
 
-    float _heath = 100.0f;
+    float _heath = 20.0f;
     float _pushBackForce = 5.0f;
 
     bool _isGetHit;
+    bool _isDead;
+    bool _isAttack;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         EnemyAnimation();
+        Attack();
     }
 
     protected void GetDamaged(float damage)
@@ -32,18 +35,37 @@ public class Enemy : MonoBehaviour
 
         if (_heath <= 0)
         {
-            Destroy(gameObject);
+            _isDead = true;
+            StartCoroutine(WaitDeathAnimationEnd());
         }
     }
 
     void EnemyAnimation()
     {
         GetHitAnimation();
+        DeathAnimation();
+        // AttackAnimation();
     }
 
     void GetHitAnimation()
     {
         _enemyAnimator.SetBool("isGetHit", _isGetHit);
+    }
+
+    void DeathAnimation()
+    {
+        _enemyAnimator.SetBool("isDead", _isDead);
+    }
+
+    void AttackAnimation()
+    {
+        _enemyAnimator.SetBool("isAttack", _isAttack);
+    }
+
+    IEnumerator WaitDeathAnimationEnd()
+    {
+        yield return new WaitForSeconds(1.3f);
+        Destroy(gameObject);
     }
 
     void PushBack(Vector2 swordPosition)
@@ -59,14 +81,33 @@ public class Enemy : MonoBehaviour
             _isGetHit = true;
             StartCoroutine(WaitForGetHitAnimationEnd());
             GetDamaged(10);
-            PushBack(collision.gameObject.transform.position);
+            // PushBack(collision.gameObject.transform.position);
         }
 
     }
-    
+
     IEnumerator WaitForGetHitAnimationEnd()
     {
         yield return new WaitForSeconds(0.34f);
         _isGetHit = false;
+    }
+
+    void Attack()
+    {
+        if (!_isAttack)
+        {
+            _isAttack = true;
+            _enemyAnimator.SetBool("isAttack", true);
+            StartCoroutine(AttackRate());
+        }
+    }
+
+    IEnumerator AttackRate()
+    {
+        yield return new WaitForSeconds(0.8f);
+        _enemyAnimator.SetBool("isAttack", false);
+
+        yield return new WaitForSeconds(2);
+        _isAttack = false;
     }
 }
