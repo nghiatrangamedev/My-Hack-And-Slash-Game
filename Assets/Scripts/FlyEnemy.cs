@@ -79,7 +79,10 @@ public class FlyEnemy : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            GetDamageToPlayer();
+            if (!_isDeath)
+            {
+                GetDamageToPlayer();
+            }
         }
 
         if (collision.gameObject.CompareTag("Sword"))
