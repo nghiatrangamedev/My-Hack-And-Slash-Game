@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] GameObject _damageBox;
-    
+
     Rigidbody2D _enemyRb;
     BoxCollider2D _enemyCollider;
     Animator _enemyAnimator;

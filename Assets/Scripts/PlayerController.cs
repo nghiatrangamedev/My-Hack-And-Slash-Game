@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D _playerRb;
 
+    public bool _isGetHurt;
+
     float _horizontalInput;
     float _verticalInput;
     float _speed = 20.0f;
@@ -20,7 +22,7 @@ public class PlayerController : MonoBehaviour
     bool _isFaceRight = true;
     bool _isDashed;
     bool _isAttacked;
-    bool _isGetHurt;
+    
     bool _isDeath;
 
     public float PlayerHeath
@@ -182,8 +184,7 @@ public class PlayerController : MonoBehaviour
 
         _playerRb.AddForce(_backDirection , ForceMode2D.Impulse);
         */
-        PlayerHeath -= 10;
-        Debug.Log("Player heath: " + PlayerHeath);
+        PlayerHeath -= 30;
 
         if (PlayerHeath <= 0 && !_isDeath)
         {
@@ -265,7 +266,7 @@ public class PlayerController : MonoBehaviour
             _isOnGround = true;
         }
 
-        if (collision.gameObject.CompareTag("EnemyDamage") || collision.gameObject.CompareTag("FlyEnemy"))
+        if (collision.gameObject.CompareTag("EnemyDamage"))
         {
             GetDamaged();
             _isGetHurt = true;
@@ -280,7 +281,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Is on the ground " + _isOnGround);
         }
 
-        if (collision.gameObject.CompareTag("EnemyDamage") || collision.gameObject.CompareTag("FlyEnemy"))
+        if (collision.gameObject.CompareTag("EnemyDamage"))
         {
             _isGetHurt = false;
         }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FlyEnemy : MonoBehaviour
 {
+
+    PlayerController _playerController;
     Rigidbody2D _enemyRb;
     Animator _flyEnemyAnimator;
     BoxCollider2D _flyEnemyCollider;
@@ -14,6 +16,8 @@ public class FlyEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+
         _enemyRb = GetComponent<Rigidbody2D>();
         _flyEnemyAnimator = GetComponent<Animator>();
         _flyEnemyCollider = GetComponent<BoxCollider2D>();
@@ -22,7 +26,7 @@ public class FlyEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void FixedUpdate()
@@ -35,7 +39,7 @@ public class FlyEnemy : MonoBehaviour
         FlyEnemyAnimation();
     }
 
-    
+
 
     void FlyEnemyAnimation()
     {
@@ -53,7 +57,7 @@ public class FlyEnemy : MonoBehaviour
         {
             _enemyRb.AddForce(Vector2.left * _speed);
         }
-        
+
     }
 
     void Death()
@@ -64,8 +68,20 @@ public class FlyEnemy : MonoBehaviour
         _enemyRb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
+    void GetDamageToPlayer()
+    {
+        _playerController._isGetHurt = true;
+        _playerController.PlayerHeath -= 10;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            GetDamageToPlayer();
+        }
+
         if (collision.gameObject.CompareTag("Sword"))
         {
             Death();
@@ -74,6 +90,14 @@ public class FlyEnemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            _playerController._isGetHurt = false;
         }
     }
 }
