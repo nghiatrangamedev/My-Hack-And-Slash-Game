@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] GameObject _damageBox;
     
     Rigidbody2D _enemyRb;
+    BoxCollider2D _enemyCollider;
     Animator _enemyAnimator;
 
     float _heath = 20.0f;
@@ -19,6 +20,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         _enemyRb = GetComponent<Rigidbody2D>();
+        _enemyCollider = GetComponent<BoxCollider2D>();
         _enemyAnimator = GetComponent<Animator>();
     }
 
@@ -32,12 +34,10 @@ public class Enemy : MonoBehaviour
     protected void GetDamaged(float damage)
     {
         _heath -= damage;
-        Debug.Log("Enemy heath: " + _heath);
 
         if (_heath <= 0)
         {
-            _isDead = true;
-            StartCoroutine(WaitDeathAnimationEnd());
+            Death();
         }
     }
 
@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour
         _enemyAnimator.SetBool("isDead", _isDead);
     }
 
-    /* Attack Animation
+    /*Attack Animation
     void AttackAnimation()
     {
         _enemyAnimator.SetBool("isAttack", _isAttack);
@@ -77,16 +77,12 @@ public class Enemy : MonoBehaviour
         _enemyRb.AddForce(forceDirection, ForceMode2D.Impulse);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void Death()
     {
-        if (collision.gameObject.CompareTag("Sword"))
-        {
-            _isGetHit = true;
-            StartCoroutine(WaitForGetHitAnimationEnd());
-            GetDamaged(10);
-            // PushBack(collision.gameObject.transform.position);
-        }
-
+        _enemyRb.constraints = RigidbodyConstraints2D.FreezeAll;
+        _enemyCollider.isTrigger = true;
+        _isDead = true;
+        StartCoroutine(WaitDeathAnimationEnd());
     }
 
     IEnumerator WaitForGetHitAnimationEnd()
@@ -97,7 +93,7 @@ public class Enemy : MonoBehaviour
 
     void Attack()
     {
-        if (!_isAttack)
+        if (!_isAttack && !_isGetHit)
         {
             _isAttack = true;
             _enemyAnimator.SetBool("isAttack", true);
@@ -116,7 +112,19 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(0.8f);
         _enemyAnimator.SetBool("isAttack", false);
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         _isAttack = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Sword"))
+        {
+            _isGetHit = true;
+            StartCoroutine(WaitForGetHitAnimationEnd());
+            GetDamaged(10);
+            // PushBack(collision.gameObject.transform.position);
+        }
+
     }
 }

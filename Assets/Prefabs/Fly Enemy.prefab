@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5146146402662792784}
   - component: {fileID: 5146146402662792791}
-  - component: {fileID: 5146146402662792785}
   - component: {fileID: 5146146402662792787}
   - component: {fileID: 561227609}
   - component: {fileID: 8798459588626788063}
+  - component: {fileID: 646404395}
+  - component: {fileID: 646404394}
   m_Layer: 0
   m_Name: Fly Enemy
   m_TagString: Untagged
@@ -86,19 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5146146402662792785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5146146402662792790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2907157531f139c4eb86b7a70af853d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _damageBox: {fileID: 0}
 --- !u!50 &5146146402662792787
 Rigidbody2D:
   serializedVersion: 4
@@ -146,12 +134,93 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5146146402662792790}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.33, y: -0.19}
+  serializedVersion: 2
+  m_Radius: 0.52
+--- !u!60 &646404395
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5146146402662792790}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.19125223, y: 0.095626116}
-  serializedVersion: 2
-  m_Radius: 0.79
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 9.375, y: 9.375}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 1.4044275, y: 0.666358}
+      - {x: 1.3140993, y: 0.7620906}
+      - {x: 1.2927585, y: 0.78492975}
+      - {x: 1.2854724, y: 0.8757998}
+      - {x: 1.1573162, y: 0.7515995}
+      - {x: 1.1842289, y: 0.70344776}
+      - {x: 1.1889687, y: 0.69796866}
+      - {x: 1.1786613, y: 0.7227475}
+      - {x: 1.266964, y: 0.69624436}
+      - {x: 1.1416426, y: 0.8892151}
+      - {x: 1.045021, y: 0.6323769}
+      - {x: 0.8868542, y: 0.5555852}
+      - {x: 0.88378716, y: 0.51410586}
+      - {x: 0.84797, y: 0.5564475}
+      - {x: 0.7351389, y: 0.5148399}
+      - {x: 0.25242996, y: 0.37011722}
+      - {x: 0.017676353, y: 0.3836274}
+      - {x: -0.38743687, y: 0.55555373}
+      - {x: -0.462821, y: 0.59970593}
+      - {x: -0.4984007, y: 0.6326447}
+      - {x: -0.4904356, y: 0.60788006}
+      - {x: -0.86370945, y: 0.71772665}
+      - {x: -1.0241814, y: 0.67096347}
+      - {x: -1.0919266, y: 0.016536534}
+      - {x: -0.91876984, y: -0.22136694}
+      - {x: -0.65705013, y: 0.13635379}
+      - {x: -0.42940807, y: 0.09841943}
+      - {x: -0.03350258, y: -0.08106315}
+      - {x: -0.22297192, y: -0.34797215}
+      - {x: -0.25748158, y: -0.50149083}
+      - {x: -0.1192646, y: -0.55367744}
+      - {x: 0.038318634, y: -1.018136}
+      - {x: 0.1185503, y: -1.0632997}
+      - {x: 0.3036089, y: -0.9165175}
+      - {x: 0.29868507, y: -0.8455882}
+      - {x: 0.4581337, y: -0.5612122}
+      - {x: 0.8020086, y: -0.74635375}
+      - {x: 1.125, y: -0.6875}
+      - {x: 0.8406172, y: -0.5843878}
+      - {x: 0.8661957, y: -0.55105877}
+      - {x: 0.8478699, y: -0.40120912}
+      - {x: 0.75764465, y: -0.108463466}
+      - {x: 0.7351804, y: 0.25296414}
+      - {x: 1.381845, y: 0.41411838}
+--- !u!114 &646404394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5146146402662792790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0439ba067208515458eef855cbe732b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
