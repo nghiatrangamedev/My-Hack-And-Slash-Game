@@ -11,6 +11,7 @@ public class FlyEnemy : MonoBehaviour
     BoxCollider2D _flyEnemyCollider;
 
     float _speed = 10.0f;
+    float _damage = 5;
 
     bool _isDeath;
     // Start is called before the first frame update
@@ -71,7 +72,7 @@ public class FlyEnemy : MonoBehaviour
     void GetDamageToPlayer()
     {
         _playerController._isGetHurt = true;
-        _playerController.PlayerHeath -= 10;
+        _playerController.PlayerHeath -= _damage;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

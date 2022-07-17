@@ -184,7 +184,7 @@ public class PlayerController : MonoBehaviour
 
         _playerRb.AddForce(_backDirection , ForceMode2D.Impulse);
         */
-        PlayerHeath -= 30;
+        PlayerHeath -= 10;
 
         if (PlayerHeath <= 0 && !_isDeath)
         {
