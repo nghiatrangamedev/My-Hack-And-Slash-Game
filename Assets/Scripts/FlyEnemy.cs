@@ -62,8 +62,6 @@ public class FlyEnemy : MonoBehaviour
 
         _enemyRb.constraints = RigidbodyConstraints2D.None;
         _enemyRb.constraints = RigidbodyConstraints2D.FreezeRotation;
-
-        _flyEnemyCollider.isTrigger = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

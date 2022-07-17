@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviour
         {
             _playerRb.AddForce(transform.right * _dashForce / 2, ForceMode2D.Impulse);
         }
-        
+
         _isDashed = true;
         StartCoroutine(DashCD());
     }
@@ -235,7 +235,7 @@ public class PlayerController : MonoBehaviour
         {
             _playerAnimator.SetBool("isOnGround", false);
         }
-        
+
     }
 
     void DashAnimation()
@@ -265,7 +265,7 @@ public class PlayerController : MonoBehaviour
             _isOnGround = true;
         }
 
-        if (collision.gameObject.CompareTag("EnemyDamage"))
+        if (collision.gameObject.CompareTag("EnemyDamage") || collision.gameObject.CompareTag("FlyEnemy"))
         {
             GetDamaged();
             _isGetHurt = true;
@@ -280,7 +280,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Is on the ground " + _isOnGround);
         }
 
-        if (collision.gameObject.CompareTag("EnemyDamage"))
+        if (collision.gameObject.CompareTag("EnemyDamage") || collision.gameObject.CompareTag("FlyEnemy"))
         {
             _isGetHurt = false;
         }
