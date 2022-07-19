@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     float _horizontalInput;
     float _verticalInput;
     float _speed = 20.0f;
-    float _jumpForce = 10.0f;
+    float _jumpForce = 12.0f;
     float _dashForce = 15.0f;
     float _playerHeath = 100.0f;
 
