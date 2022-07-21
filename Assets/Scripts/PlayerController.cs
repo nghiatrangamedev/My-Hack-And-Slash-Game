@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] GameObject _bestSword;
+    [SerializeField] GameObject _camera;
+
     Animator _playerAnimator;
 
     Rigidbody2D _playerRb;
@@ -56,6 +58,7 @@ public class PlayerController : MonoBehaviour
     {
         PlayerInput();
         FlipPlayer();
+        DeathByFall();
         PlayerAnimation();
     }
 
@@ -190,6 +193,16 @@ public class PlayerController : MonoBehaviour
         {
             //_isDeath = true;
             _playerAnimator.Play("Death", 0);
+        }
+    }
+
+    void DeathByFall()
+    {
+        if (transform.position.y < - 9)
+        {
+            _playerRb.constraints = RigidbodyConstraints2D.FreezeAll;
+            _isDeath = true;
+            PlayerHeath = 0;
         }
     }
 

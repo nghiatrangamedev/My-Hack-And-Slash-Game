@@ -9,6 +9,7 @@ TagManager:
   - Sword
   - EnemyDamage
   - FlyEnemy
+  - Death Area
   layers:
   - Default
   - TransparentFX

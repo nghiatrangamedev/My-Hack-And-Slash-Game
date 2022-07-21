@@ -97,14 +97,15 @@ public class Enemy : MonoBehaviour
         {
             _isAttack = true;
             _enemyAnimator.SetBool("isAttack", true);
-            Invoke("SpawnDamageBox", 0.4f);
+            Invoke("SpawnDamageBox", 0.5f);
             StartCoroutine(AttackRate());
         }
     }
 
     void SpawnDamageBox()
     {
-        Instantiate(_damageBox, transform.position, Quaternion.identity);
+        Vector2 spawnPos = transform.position + transform.right;
+        Instantiate(_damageBox, spawnPos, transform.rotation);
     }
 
     IEnumerator AttackRate()
