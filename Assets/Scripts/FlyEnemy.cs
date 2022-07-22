@@ -56,7 +56,7 @@ public class FlyEnemy : MonoBehaviour
     {
         if (!_isDeath)
         {
-            _enemyRb.AddForce(Vector2.left * _speed);
+            _enemyRb.AddForce(transform.right * _speed);
         }
 
     }
@@ -86,14 +86,31 @@ public class FlyEnemy : MonoBehaviour
             }
         }
 
-        if (collision.gameObject.CompareTag("Sword"))
+        else if (collision.gameObject.CompareTag("Sword"))
         {
             Death();
         }
 
-        if (collision.gameObject.CompareTag("Ground"))
+        else if (collision.gameObject.CompareTag("Ground"))
         {
             Destroy(gameObject);
+        }
+
+        else if (collision.gameObject.CompareTag("Turn Left"))
+        {
+            if (!_isDeath)
+            {
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+            
+        }
+
+        else if (collision.gameObject.CompareTag("Turn Right"))
+        {
+            if (!_isDeath)
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
         }
     }
 

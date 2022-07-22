@@ -97,7 +97,7 @@ public class Enemy : MonoBehaviour
         {
             _isAttack = true;
             _enemyAnimator.SetBool("isAttack", true);
-            Invoke("SpawnDamageBox", 0.5f);
+            Invoke("SpawnDamageBox", 0.6f);
             StartCoroutine(AttackRate());
         }
     }

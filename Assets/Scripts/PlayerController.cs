@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] GameObject _bestSword;
     [SerializeField] GameObject _camera;
+    [SerializeField] CinemachineVirtualCamera _virtualCamera;
 
     Animator _playerAnimator;
 
@@ -65,6 +67,11 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         PlayerMovement();
+    }
+
+    private void LateUpdate()
+    {
+        CameraFollowRule();
     }
 
     void PlayerInput()
@@ -198,7 +205,7 @@ public class PlayerController : MonoBehaviour
 
     void DeathByFall()
     {
-        if (transform.position.y < - 9)
+        if (transform.position.y < - 10)
         {
             _playerRb.constraints = RigidbodyConstraints2D.FreezeAll;
             _isDeath = true;
@@ -270,6 +277,20 @@ public class PlayerController : MonoBehaviour
     void DeathAnimation()
     {
         _playerAnimator.SetBool("isDeath", _isDeath);
+    }
+
+    void CameraFollowRule()
+    {
+        if (transform.position.y < -3)
+        {
+            _virtualCamera.Follow = null;
+        }
+
+        else
+        {
+            _virtualCamera.Follow = gameObject.transform;
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
