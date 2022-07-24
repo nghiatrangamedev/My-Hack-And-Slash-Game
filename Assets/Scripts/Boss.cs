@@ -5,6 +5,7 @@ using UnityEngine;
 public class Boss : MonoBehaviour
 {
     [SerializeField] GameObject _bossSword;
+    [SerializeField] GameObject _darkSpell;
 
     Rigidbody2D _bossRb;
     Animator _bossAnimator;
@@ -154,8 +155,14 @@ public class Boss : MonoBehaviour
         _isWalk = false;
         _isCastSpell = true;
         CastSpellAnimation();
+        SummonDarkHole();
     }
 
+    void SummonDarkHole()
+    {
+        Vector2 spellPos = new Vector2(130, 20);
+        Instantiate(_darkSpell, spellPos, _darkSpell.transform.rotation);
+    }
     void CastSpellAnimation()
     {
         _bossAnimator.SetBool("IsCastSpell", _isCastSpell);
@@ -164,8 +171,12 @@ public class Boss : MonoBehaviour
 
     IEnumerator WaitForCastSpellAnimationEnd()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(0.2f);
+        _bossAnimator.SetBool("IsCastSpell", false);
+
+        yield return new WaitForSeconds(2);
         _isCastSpell = false;
+        _isWalk = true;
     }
 
     // Animation
@@ -179,14 +190,21 @@ public class Boss : MonoBehaviour
     {
         if (collision.gameObject.tag == "Turn Left")
         {
-            ChangeMoveDirection(180);
-            CastSpell();
+            if (transform.eulerAngles.y == 0)
+            {
+                ChangeMoveDirection(180);
+                CastSpell();
+            }
+            
         }
 
         else if (collision.gameObject.tag == "Turn Right")
         {
-            ChangeMoveDirection(0);
-            CastSpell();
+            if (transform.eulerAngles.y == 180)
+            {
+                ChangeMoveDirection(0);
+                CastSpell();
+            }
         }
 
         else if (collision.gameObject.tag == "Sword")
