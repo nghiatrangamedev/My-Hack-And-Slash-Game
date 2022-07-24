@@ -12,6 +12,7 @@ TagManager:
   - Death Area
   - Turn Right
   - Turn Left
+  - Boss Sword
   layers:
   - Default
   - TransparentFX

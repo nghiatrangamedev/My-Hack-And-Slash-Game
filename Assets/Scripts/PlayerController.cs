@@ -186,7 +186,7 @@ public class PlayerController : MonoBehaviour
         _isDashed = false;
     }
 
-    void GetDamaged(/*Vector3 _enemyPos*/)
+    void GetDamaged(float damage)
     {
         /*
         float _backForce = 10.0f;
@@ -194,7 +194,7 @@ public class PlayerController : MonoBehaviour
 
         _playerRb.AddForce(_backDirection , ForceMode2D.Impulse);
         */
-        PlayerHeath -= 10;
+        PlayerHeath -= damage;
 
         if (PlayerHeath <= 0 && !_isDeath)
         {
@@ -302,7 +302,13 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("EnemyDamage"))
         {
-            GetDamaged();
+            GetDamaged(10);
+            _isGetHurt = true;
+        }
+
+        if (collision.gameObject.CompareTag("Boss Sword"))
+        {
+            GetDamaged(15);
             _isGetHurt = true;
         }
     }
@@ -319,13 +325,18 @@ public class PlayerController : MonoBehaviour
         {
             _isGetHurt = false;
         }
+
+        if (collision.gameObject.CompareTag("Boss Sword"))
+        {
+            _isGetHurt = false;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            GetDamaged();
+            GetDamaged(5);
             _isGetHurt = true;
         }
     }
