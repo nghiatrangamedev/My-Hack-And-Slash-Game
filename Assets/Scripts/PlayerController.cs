@@ -311,6 +311,12 @@ public class PlayerController : MonoBehaviour
             GetDamaged(15);
             _isGetHurt = true;
         }
+
+        if (collision.gameObject.CompareTag("Dark Spell"))
+        {
+            GetDamaged(20);
+            _isGetHurt = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -327,6 +333,11 @@ public class PlayerController : MonoBehaviour
         }
 
         if (collision.gameObject.CompareTag("Boss Sword"))
+        {
+            _isGetHurt = false;
+        }
+
+        if (collision.gameObject.CompareTag("Dark Spell"))
         {
             _isGetHurt = false;
         }

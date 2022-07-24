@@ -15,8 +15,9 @@ public class Boss : MonoBehaviour
 
     bool _isWalk;
     bool _isAttack;
+    bool _isCastSpell;
     bool _isDeath;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -64,11 +65,6 @@ public class Boss : MonoBehaviour
     void BossMovement()
     {
         _bossRb.AddForce(transform.right * _speed);
-    }
-
-    void BossAnimation()
-    {
-        BossMovementAnimation();
     }
 
     void BossMovementAnimation()
@@ -152,17 +148,45 @@ public class Boss : MonoBehaviour
         Destroy(gameObject);
     }
 
+    // Cast Spell
+    void CastSpell()
+    {
+        _isWalk = false;
+        _isCastSpell = true;
+        CastSpellAnimation();
+    }
+
+    void CastSpellAnimation()
+    {
+        _bossAnimator.SetBool("IsCastSpell", _isCastSpell);
+        StartCoroutine(WaitForCastSpellAnimationEnd());
+    }
+
+    IEnumerator WaitForCastSpellAnimationEnd()
+    {
+        yield return new WaitForSeconds(5);
+        _isCastSpell = false;
+    }
+
+    // Animation
+    void BossAnimation()
+    {
+        BossMovementAnimation();
+    }
+
     // Collide
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Turn Left")
         {
             ChangeMoveDirection(180);
+            CastSpell();
         }
 
         else if (collision.gameObject.tag == "Turn Right")
         {
             ChangeMoveDirection(0);
+            CastSpell();
         }
 
         else if (collision.gameObject.tag == "Sword")

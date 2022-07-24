@@ -13,6 +13,7 @@ TagManager:
   - Turn Right
   - Turn Left
   - Boss Sword
+  - Dark Spell
   layers:
   - Default
   - TransparentFX
