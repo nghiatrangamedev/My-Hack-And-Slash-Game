@@ -6,6 +6,7 @@ public class Boss : MonoBehaviour
 {
     [SerializeField] GameObject _bossSword;
     [SerializeField] GameObject _darkSpell;
+    [SerializeField] Transform _player;
 
     Rigidbody2D _bossRb;
     Animator _bossAnimator;
@@ -18,7 +19,7 @@ public class Boss : MonoBehaviour
     bool _isAttack;
     bool _isCastSpell;
     bool _isDeath;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -160,9 +161,10 @@ public class Boss : MonoBehaviour
 
     void SummonDarkHole()
     {
-        Vector2 spellPos = new Vector2(130, 20);
+        Vector2 spellPos = _player.position + Vector3.up * 2;
         Instantiate(_darkSpell, spellPos, _darkSpell.transform.rotation);
     }
+
     void CastSpellAnimation()
     {
         _bossAnimator.SetBool("IsCastSpell", _isCastSpell);
@@ -195,7 +197,7 @@ public class Boss : MonoBehaviour
                 ChangeMoveDirection(180);
                 CastSpell();
             }
-            
+
         }
 
         else if (collision.gameObject.tag == "Turn Right")
