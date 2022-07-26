@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI _playerHeathText;
     [SerializeField] GameObject _gameOver;
 
-    float _playerHeath;
+    [SerializeField] Slider _heathSlider;
 
     // Start is called before the first frame update
     void Start()
@@ -27,15 +27,16 @@ public class GameManager : MonoBehaviour
         CheckGameOver();
     }
 
+    
     void DisplayPlayerHeath()
     {
-        _playerHeath = _playerScript.PlayerHeath;
-        _playerHeathText.SetText("Heath: " + _playerHeath);
+        _heathSlider.value = _playerScript.PlayerHeath;
     }
+    
 
     void CheckGameOver ()
     {
-        if (_playerHeath <= 0)
+        if (_heathSlider.value <= 0)
         {
             _gameOver.SetActive(true);
         }
