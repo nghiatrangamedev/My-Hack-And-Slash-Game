@@ -8,6 +8,9 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] GameObject _startMenu;
+    [SerializeField] GameObject _tutorailMenu;
+
     [SerializeField] PlayerController _playerScript;
     [SerializeField] TextMeshProUGUI _playerHeathText;
     [SerializeField] GameObject _gameOver;
@@ -56,4 +59,17 @@ public class GameManager : MonoBehaviour
     {
         EditorApplication.ExitPlaymode();
     }
+
+    public void TurnOnTurorialMenu()
+    {
+        _startMenu.SetActive(false);
+        _tutorailMenu.SetActive(true);
+    }
+
+    public void TurnOffTurorialMenu()
+    {
+        _startMenu.SetActive(true);
+        _tutorailMenu.SetActive(false);
+    }
+
 }

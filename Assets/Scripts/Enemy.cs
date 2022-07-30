@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator WaitDeathAnimationEnd()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         Destroy(gameObject);
     }
 
@@ -87,7 +87,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator WaitForGetHitAnimationEnd()
     {
-        yield return new WaitForSeconds(0.34f);
+        yield return new WaitForSeconds(0.4f);
         _isGetHit = false;
     }
 
@@ -110,7 +110,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator AttackRate()
     {
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.2f);
         _enemyAnimator.SetBool("isAttack", false);
 
         yield return new WaitForSeconds(2);
