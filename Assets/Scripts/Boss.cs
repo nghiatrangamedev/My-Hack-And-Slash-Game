@@ -13,7 +13,7 @@ public class Boss : MonoBehaviour
 
     float _walkDelay = 2.0f;
     float _speed = 10.0f;
-    float _heath = 100.0f;
+    public float _heath = 100.0f;
 
     bool _isWalk;
     bool _isAttack;
