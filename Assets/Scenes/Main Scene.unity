@@ -2148,7 +2148,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f22c7df422ca6854aa49616e6124bc94, type: 3}
+  m_audioClip: {fileID: 8300000, guid: c50a576100604534e9595b56af675bc0, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
@@ -46851,9 +46851,9 @@ MonoBehaviour:
   _bestSword: {fileID: 3802481169712388795, guid: 18e37a48764d2e949811a4227cdb1494, type: 3}
   _camera: {fileID: 1930317822}
   _virtualCamera: {fileID: 1930317823}
-  _swordSound: {fileID: 8300000, guid: 4a578695dfac4422d81299af3481ea10, type: 3}
-  _jumpSound: {fileID: 8300000, guid: 026076d371cdc604482a1794035cb5e2, type: 3}
-  _deathSound: {fileID: 8300000, guid: db1bffbd883ee5447969e50b34ad8e97, type: 3}
+  _attackSound: {fileID: 8300000, guid: d8caeb99b44395245adf14e671961f45, type: 3}
+  _jumpSound: {fileID: 8300000, guid: b817814630602c24caf0d7d6e8525272, type: 3}
+  _deathSound: {fileID: 8300000, guid: c1b85a8b26879614cab6bda8a7926ebe, type: 3}
   _isGetHurt: 0
 --- !u!95 &1315891903
 Animator:

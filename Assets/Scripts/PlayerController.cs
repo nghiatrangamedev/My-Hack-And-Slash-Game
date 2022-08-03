@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] CinemachineVirtualCamera _virtualCamera;
 
-    [SerializeField] AudioClip _swordSound;
+    [SerializeField] AudioClip _attackSound;
     [SerializeField] AudioClip _jumpSound;
     [SerializeField] AudioClip _deathSound;
 
@@ -334,7 +334,7 @@ public class PlayerController : MonoBehaviour
 
     void SwordSound()
     {
-        _playerAudio.PlayOneShot(_swordSound, 1);
+        _playerAudio.PlayOneShot(_attackSound, 1);
     }
 
     void JumpSound()
