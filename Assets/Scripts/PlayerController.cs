@@ -7,11 +7,18 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] GameObject _bestSword;
     [SerializeField] GameObject _camera;
+
     [SerializeField] CinemachineVirtualCamera _virtualCamera;
+
+    [SerializeField] AudioClip _swordSound;
+    [SerializeField] AudioClip _jumpSound;
+    [SerializeField] AudioClip _deathSound;
 
     Animator _playerAnimator;
 
     Rigidbody2D _playerRb;
+
+    AudioSource _playerAudio;
 
     public bool _isGetHurt;
 
@@ -53,6 +60,7 @@ public class PlayerController : MonoBehaviour
     {
         _playerRb = GetComponent<Rigidbody2D>();
         _playerAnimator = GetComponent<Animator>();
+        _playerAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -74,6 +82,8 @@ public class PlayerController : MonoBehaviour
         CameraFollowRule();
     }
 
+    // Input
+
     void PlayerInput()
     {
         _horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -84,6 +94,8 @@ public class PlayerController : MonoBehaviour
             PlayerAttack();
         }
     }
+    
+    // Move
 
     void PlayerMovement()
     {
@@ -112,10 +124,15 @@ public class PlayerController : MonoBehaviour
         _playerRb.AddForce(Vector2.right * _horizontalInput * _speed);
     }
 
+    // Jump
+
     void Jump()
     {
         _playerRb.AddForce(Vector2.up * _verticalInput * _jumpForce, ForceMode2D.Impulse);
+        JumpSound();
     }
+
+    // FLip
 
     void FlipPlayer()
     {
@@ -132,9 +149,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Attack
+
     void PlayerAttack()
     {
         _isAttacked = true;
+        SwordSound();
+
         StartCoroutine(AttackRate());
 
         Invoke("SpawnSword", 0.3f);
@@ -164,6 +185,8 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    // Dash
+
     void Dash()
     {
         if (_horizontalInput == 0)
@@ -186,6 +209,8 @@ public class PlayerController : MonoBehaviour
         _isDashed = false;
     }
 
+    // Get Hurt
+
     void GetDamaged(float damage)
     {
         /*
@@ -198,20 +223,30 @@ public class PlayerController : MonoBehaviour
 
         if (PlayerHeath <= 0 && !_isDeath)
         {
-            //_isDeath = true;
+            _isDeath = true;
             _playerAnimator.Play("Death", 0);
+            DeathSound();
         }
     }
+
+    // Death
 
     void DeathByFall()
     {
         if (transform.position.y < - 10)
         {
             _playerRb.constraints = RigidbodyConstraints2D.FreezeAll;
-            _isDeath = true;
-            PlayerHeath = 0;
+
+            if (!_isDeath)
+            {
+                _isDeath = true;
+                PlayerHeath = 0;
+                DeathSound();
+            }
         }
     }
+
+    // Animation
 
     void PlayerAnimation()
     {
@@ -279,6 +314,8 @@ public class PlayerController : MonoBehaviour
         _playerAnimator.SetBool("isDeath", _isDeath);
     }
 
+    // Camera
+
     void CameraFollowRule()
     {
         if (transform.position.y < -3)
@@ -292,6 +329,25 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+    // Sound Effect
+
+    void SwordSound()
+    {
+        _playerAudio.PlayOneShot(_swordSound, 1);
+    }
+
+    void JumpSound()
+    {
+        _playerAudio.PlayOneShot(_jumpSound, 1);
+    }
+
+    void DeathSound()
+    {
+        _playerAudio.PlayOneShot(_deathSound, 1);
+    }
+
+    // Collider
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
