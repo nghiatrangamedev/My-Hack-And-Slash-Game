@@ -380,7 +380,6 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             _isOnGround = false;
-            Debug.Log("Is on the ground " + _isOnGround);
         }
 
         if (collision.gameObject.CompareTag("EnemyDamage"))
