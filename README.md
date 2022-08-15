@@ -1,5 +1,9 @@
 # My-Hack-And-Slash-Game
-Video Demo
+This is my first game. It has been done for a month
 
-https://user-images.githubusercontent.com/103371271/179383574-a0938f03-a134-49e5-860b-2dc5a4065e64.mp4
+And this is a video gameplay
+
+
+
+https://user-images.githubusercontent.com/103371271/183094820-e1c2dd5e-7832-4b5e-8d20-450f4d81e0d0.mp4
 
